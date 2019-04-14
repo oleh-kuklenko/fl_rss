@@ -34,7 +34,7 @@ class DB extends Base {
 		@transliterated - заголовок в транслите
 	*/
 	public function addTask($data, $transliterated) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "tasks SET title = '" . $this->db->escape($data['title']) . "', transliterated = '" . $this->db->escape($transliterated) . "', link = '" . $this->db->escape($data['link']) . "', category = '" . $this->db->escape($data['category']) . "', date = '" . $this->db->escape($data['pubDate']) . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "tasks SET title = '" . $this->db->escape($data['title']) . "', description = '" . $this->db->escape($data['description']) . "', transliterated = '" . $this->db->escape($transliterated) . "', link = '" . $this->db->escape($data['link']) . "', category = '" . $this->db->escape($data['category']) . "', date = '" . $this->db->escape($data['pubDate']) . "'");
 	}
 
 	/**
@@ -98,6 +98,7 @@ class DB extends Base {
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "tasks` (
 				`task_id` INT NOT NULL AUTO_INCREMENT,
 				`title` VARCHAR(255) NOT NULL,
+				`description` text NOT NULL,
 				`transliterated` VARCHAR(255) NOT NULL,
 				`link` VARCHAR(255) NOT NULL,
 				`category` VARCHAR(255) NOT NULL,
