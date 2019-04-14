@@ -1,0 +1,12 @@
+{
+    "authors": [
+        {
+            "name": "Oleg",
+            "email": "oleg.kklimenok@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "~6.0",
+        "nesbot/carbon": "^1.34"
+    }
+}
