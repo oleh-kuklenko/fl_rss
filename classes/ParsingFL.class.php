@@ -15,6 +15,7 @@ class ParsingFL extends Base {
 				$this->tasks[] = array(
 					'title' => (string) $item->title,
 					'link' => (string) $item->link,
+					'description' => (string)$item->description,
 					'category' => (string) $item->category,
 					'pubDate' => $this->dateFormat((string) $item->pubDate, 'Y-m-d H:i:s'),
 				);
