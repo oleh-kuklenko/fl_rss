@@ -6,37 +6,41 @@ class ParsingFL extends Base {
 	protected $root = null;
 
 	public function processing() {
-		$this->initialize();
+		foreach(__URL__ as $url) {
+			$this->logging(__CLASS__ . ' | URL: ' . $url);
 
-		if (is_object($this->root) && !is_null($this->root)) {
-			$items = $this->root->channel->item;
+			$this->initialize($url);
 
-			foreach ($items as $item) {
-				$this->tasks[] = array(
-					'title' => (string) $item->title,
-					'link' => (string) $item->link,
-					'description' => (string)$item->description,
-					'category' => (string) $item->category,
-					'pubDate' => $this->dateFormat((string) $item->pubDate, 'Y-m-d H:i:s'),
-				);
+			if (is_object($this->root) && !is_null($this->root)) {
+				$items = $this->root->channel->item;
+
+				foreach ($items as $item) {
+					$this->tasks[] = array(
+						'title' => (string) $item->title,
+						'link' => (string) $item->link,
+						'description' => (string)$item->description,
+						'category' => (string) $item->category,
+						'pubDate' => $this->dateFormat((string) $item->pubDate, 'Y-m-d H:i:s'),
+					);
+				}
+
+				$this->logging(__CLASS__ . ' | Count parsed tasks: ' . count($this->tasks));
+			} else {
+				$this->logging(__CLASS__ . ' | Wrong initialized!');
 			}
-
-			$this->logging(__CLASS__ . ' | Count parsed tasks: ' . count($this->tasks));
-
-			return true;
-		} else {
-			$this->logging(__CLASS__ . ' | Wrong initialized!');
 		}
 
-		return false;
+		return true;
 	}
 
 	public function getTasks() {
 		return $this->tasks;
 	}
 
-	protected function initialize() {
-		$_data = $this->getUrlContent(); // get content yml
+	protected function initialize($url) {
+		$this->root = null;
+		
+		$_data = $this->getUrlContent($url); // get content yml
 
 		if (false !== $_data) {
 			$this->root = simplexml_load_string($_data); // create object SimpleXMlElement
@@ -45,11 +49,11 @@ class ParsingFL extends Base {
 		}
 	}
 
-	protected function getUrlContent() {
+	protected function getUrlContent($url) {
 		$ch = curl_init();
 
 		$options = array(
-			CURLOPT_URL => __URL__,
+			CURLOPT_URL => $url,
 			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_FOLLOWLOCATION => 1,
 			CURLOPT_HEADER => false,
