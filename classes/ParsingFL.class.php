@@ -23,12 +23,12 @@ class ParsingFL extends Base {
 						'pubDate' => $this->dateFormat((string) $item->pubDate, 'Y-m-d H:i:s'),
 					);
 				}
-
-				$this->logging(__CLASS__ . ' | Count parsed tasks: ' . count($this->tasks));
 			} else {
 				$this->logging(__CLASS__ . ' | Wrong initialized!');
 			}
 		}
+
+		$this->logging(__CLASS__ . ' | Count parsed tasks: ' . count($this->tasks));
 
 		return true;
 	}
